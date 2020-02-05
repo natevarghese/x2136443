@@ -52,8 +52,7 @@
                    VerticalOptions="FillAndExpand"
                    HorizontalOptions="FillAndExpand"
                    VerticalTextAlignment="Center"
-                   HorizontalTextAlignment="Center"
-                   Text="Nothing to see here" />
+                   HorizontalTextAlignment="Center" />
             <ListView x:Name="MyListView"
                 IsPullToRefreshEnabled="true"
                 ItemsSource="{Binding TableItems}"

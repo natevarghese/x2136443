@@ -30,6 +30,7 @@ namespace x2136443.Pages
             ApplySafeAreaGridConstraints(ParentGrid);
 
             MyVideoPlayer.Volume = 100;
+            MuteButton.Text = x2136443.Resources.AppStrings.Mute;
 
             MyVideoPlayer.PlayerStateChanged += MyVideoPlayer_PlayerStateChanged;
             MyVideoPlayer.TimeElapsed += MyVideoPlayer_TimeElapsed;

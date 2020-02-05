@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using x2136443.ViewModels;
-using Xamarin.Forms;
 
 namespace x2136443.Pages
 {
@@ -18,6 +15,8 @@ namespace x2136443.Pages
             base.OnAppearing();
 
             ApplySafeAreaGridConstraints(ParentGrid);
+
+            EmptyLabel.Text = x2136443.Resources.AppStrings.NoData;
 
             MyListView.ItemSelected += ViewModel.ListView_ItemSelected;
 

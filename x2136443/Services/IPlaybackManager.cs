@@ -18,7 +18,7 @@ namespace x2136443.Services
     public class PlaybackManager : IPlaybackManager
     {
         static List<DownloadedVideo> Videos;
-        static string Key = AppConstants.PersistantStorageKeyVideoPlaybackLog;
+        static readonly string Key = AppConstants.PersistantStorageKeyVideoPlaybackLog;
 
         async public Task Clear()
         {

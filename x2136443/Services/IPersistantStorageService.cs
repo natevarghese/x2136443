@@ -29,9 +29,9 @@ namespace x2136443.Services
             {
                 await BlobCache.UserAccount.InsertObject(key, value);
             }
-            catch (Exception e)
+            catch
             {
-                System.Diagnostics.Debugger.Break();
+
             }
         }
 
@@ -53,9 +53,8 @@ namespace x2136443.Services
             {
                 await BlobCache.LocalMachine.InsertObject(key, value);
             }
-            catch (Exception e)
+            catch
             {
-                System.Diagnostics.Debugger.Break();
             }
         }
 
