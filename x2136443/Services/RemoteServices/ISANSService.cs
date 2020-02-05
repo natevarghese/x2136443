@@ -40,7 +40,7 @@ namespace x2136443.Services.RemoveServices
         async public Task<IList<Section>> GetOutline()
         {
             var uri = new Uri(BaseURI, $"{ApiRoutes.Outline.Root}.json");
-            var response = await SendRequestAsync<OutlineResult>(uri, HttpMethod.Get, null, 30, true);
+            var response = await SendRequestAsync<OutlineResult>(uri, HttpMethod.Get, null, true);
             return response?.Sections;
         }
 

@@ -34,7 +34,8 @@ namespace x2136443.Services
 
         async public Task Start()
         {
-            Videos = await App.PersistantStorageService.Get<List<DownloadedVideo>>(Key) ?? new List<DownloadedVideo>();
+            if (!Videos?.Any() ?? true)
+                Videos = await App.PersistantStorageService.Get<List<DownloadedVideo>>(Key) ?? new List<DownloadedVideo>();
         }
 
         public void UploadTimeForVideo(string name, int seconds)
@@ -53,7 +54,7 @@ namespace x2136443.Services
 
         public int GetPlaybackLastTimeForVideo(string name)
         {
-            return Videos.FirstOrDefault(c => c.Name == name)?.CurrentTime ?? 0;
+            return Videos?.FirstOrDefault(c => c.Name == name)?.CurrentTime ?? 0;
         }
 
     }

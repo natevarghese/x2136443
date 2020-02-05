@@ -19,8 +19,6 @@ namespace x2136443.Pages
 
             ApplySafeAreaGridConstraints(ParentGrid);
 
-            Title = "";
-
             MyListView.ItemSelected += ViewModel.ListView_ItemSelected;
 
         }

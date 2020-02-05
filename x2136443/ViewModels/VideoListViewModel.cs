@@ -1,8 +1,10 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using x2136443.DataModels;
+using x2136443.Pages;
 using x2136443.Services;
 using Xamarin.Forms;
 
@@ -14,6 +16,10 @@ namespace x2136443.ViewModels
 
         async public override Task<IEnumerable<object>> Fetch()
         {
+            //HACK delay required for some reason on android. Need more time
+            if (Xamarin.Essentials.DeviceInfo.Platform == Xamarin.Essentials.DevicePlatform.Android)
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
+
             OriginalData = await App.SANSService.GetOutline();
             return ProcessItems();
         }
@@ -46,7 +52,6 @@ namespace x2136443.ViewModels
             else if (item is Video video)
             {
                 var fileManagerService = ServiceLocator.Instance.Resolve<IFileManager>();
-                var videoPlayerService = ServiceLocator.Instance.Resolve<IVideoPlayer>();
 
                 //The result payload should should really have an id but for now
                 //create unique identifier from the name property
@@ -68,8 +73,7 @@ namespace x2136443.ViewModels
                 {
                     var path = fileManagerService.GetPathForFile(name);
                     var lastPlaybackSeconds = App.PlaybackManager.GetPlaybackLastTimeForVideo(name);
-
-                    videoPlayerService.PlayVideo(path, lastPlaybackSeconds);
+                    NavService?.PushAsync(new VideoPlayerPage() { Url = path, StartTime = lastPlaybackSeconds });
                 }
                 return;
             }

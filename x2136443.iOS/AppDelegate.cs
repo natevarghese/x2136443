@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿
 using Foundation;
 using UIKit;
-using x2136443.iOS.Services;
-using x2136443.Services;
 
 namespace x2136443.iOS
 {
@@ -28,7 +23,7 @@ namespace x2136443.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
-            ServiceLocator.Instance.Add<IVideoPlayer, VideoPlayer>();
+            Octane.Xamarin.Forms.VideoPlayer.iOS.FormsVideoPlayer.Init();
 
             return base.FinishedLaunching(app, options);
         }

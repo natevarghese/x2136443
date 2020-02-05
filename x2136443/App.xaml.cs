@@ -27,7 +27,7 @@ namespace x2136443
 
             Akavache.Registrations.Start("x2136443");
 
-            MainPage = new VideoListPage();
+            MainPage = new NavigationPage(new VideoListPage());
         }
 
         protected override void OnStart()

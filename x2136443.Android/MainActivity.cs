@@ -22,6 +22,9 @@ namespace x2136443.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+
+            Octane.Xamarin.Forms.VideoPlayer.Android.FormsVideoPlayer.Init();
+            Acr.UserDialogs.UserDialogs.Init(this);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

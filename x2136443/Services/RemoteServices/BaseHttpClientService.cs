@@ -17,10 +17,9 @@ namespace x2136443.Services.RemoveServices
 
         static HttpClient Client = new HttpClient(new HttpClientHandler());
 
-        protected async Task<T> SendRequestAsync<T>(Uri url, HttpMethod httpMethod, object requestData, int timeoutSeconds, bool isCacheEnabled) where T : new()
+        protected async Task<T> SendRequestAsync<T>(Uri url, HttpMethod httpMethod, object requestData, bool isCacheEnabled) where T : new()
         {
-            //update timeout
-            Client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+
 
             // Default to GET
             var method = httpMethod ?? HttpMethod.Get;

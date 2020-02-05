@@ -45,6 +45,7 @@ namespace x2136443.Pages
         }
 
         protected virtual void PassDataToViewModel() { }
+
 #if DEBUG
         ~BasePage()
         {

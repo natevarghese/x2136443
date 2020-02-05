@@ -9070,16 +9070,19 @@ namespace x2136443.Droid
 			public const int useLogo = 2131230926;
 			
 			// aapt resource value: 0x7F0800CF
-			public const int view_offset_helper = 2131230927;
+			public const int videoView = 2131230927;
 			
 			// aapt resource value: 0x7F0800D0
-			public const int visible = 2131230928;
+			public const int view_offset_helper = 2131230928;
 			
 			// aapt resource value: 0x7F0800D1
-			public const int withText = 2131230929;
+			public const int visible = 2131230929;
 			
 			// aapt resource value: 0x7F0800D2
-			public const int wrap_content = 2131230930;
+			public const int withText = 2131230930;
+			
+			// aapt resource value: 0x7F0800D3
+			public const int wrap_content = 2131230931;
 			
 			static Id()
 			{
@@ -9398,6 +9401,9 @@ namespace x2136443.Droid
 			
 			// aapt resource value: 0x7F0B0049
 			public const int Toolbar = 2131427401;
+			
+			// aapt resource value: 0x7F0B004A
+			public const int VideoActivity = 2131427402;
 			
 			static Layout()
 			{
