@@ -3,6 +3,7 @@
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:pages="clr-namespace:x2136443.Pages;assembly=x2136443"
                         xmlns:dataTemplateSelectors="clr-namespace:x2136443.DataTemplateSelectors;assembly=x2136443"
+                        xmlns:resources="clr-namespace:x2136443.Resources"
                         xmlns:vms="clr-namespace:x2136443.ViewModels;assembly=x2136443"
                         x:Class="x2136443.Pages.VideoListPage"
                         x:TypeArguments="vms:VideoListViewModel">
@@ -46,6 +47,7 @@
             <Label Grid.Row="1"
                    x:Name="EmptyLabel"
                    Margin="0,0,0,0"
+                   Text="{x:Static resources:AppStrings.NoData}"
                    IsVisible="{Binding ListViewEmpty}"
                    VerticalOptions="FillAndExpand"
                    HorizontalOptions="FillAndExpand"

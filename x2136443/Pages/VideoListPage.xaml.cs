@@ -16,8 +16,6 @@ namespace x2136443.Pages
 
             ApplySafeAreaGridConstraints(ParentGrid);
 
-            EmptyLabel.Text = x2136443.Resources.AppStrings.NoData;
-
             MyListView.ItemTapped += ViewModel.ListView_ItemTapped;
 
         }
@@ -26,7 +24,6 @@ namespace x2136443.Pages
             base.OnDisappearing();
 
             MyListView.ItemTapped -= ViewModel.ListView_ItemTapped;
-
         }
     }
 }

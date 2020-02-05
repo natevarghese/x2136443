@@ -29,12 +29,8 @@ namespace x2136443.Pages
 
             ApplySafeAreaGridConstraints(ParentGrid);
 
-            MyVideoPlayer.Volume = 100;
-            MuteButton.Text = x2136443.Resources.AppStrings.Mute;
-
             MyVideoPlayer.PlayerStateChanged += MyVideoPlayer_PlayerStateChanged;
             MyVideoPlayer.TimeElapsed += MyVideoPlayer_TimeElapsed;
-            MuteButton.Clicked += MuteButton_Clicked;
         }
 
 
@@ -45,7 +41,6 @@ namespace x2136443.Pages
 
             MyVideoPlayer.PlayerStateChanged -= MyVideoPlayer_PlayerStateChanged;
             MyVideoPlayer.TimeElapsed -= MyVideoPlayer_TimeElapsed;
-            MuteButton.Clicked -= MuteButton_Clicked;
         }
 
 
@@ -66,13 +61,7 @@ namespace x2136443.Pages
         }
         void MyVideoPlayer_TimeElapsed(object sender, Octane.Xamarin.Forms.VideoPlayer.Events.VideoPlayerEventArgs e)
         {
-            var name = Url.Split('/').Last();
-            App.PlaybackManager.UploadTimeForVideo(name, (int)e.CurrentTime.TotalSeconds);
-        }
-
-        void MuteButton_Clicked(object sender, EventArgs e)
-        {
-            MyVideoPlayer.Volume = MyVideoPlayer.Volume == 0 ? 100 : 0;
+            ViewModel.PlaybackTicked((int)e.CurrentTime.TotalSeconds);
         }
     }
 }

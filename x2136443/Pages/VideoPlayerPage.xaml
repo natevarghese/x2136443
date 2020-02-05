@@ -4,6 +4,7 @@
                         xmlns:vms="clr-namespace:x2136443.ViewModels;assembly=x2136443"
                         xmlns:pages="clr-namespace:x2136443.Pages;assembly=x2136443"
                         xmlns:o="clr-namespace:Octane.Xamarin.Forms.VideoPlayer;assembly=Octane.Xamarin.Forms.VideoPlayer"
+                        xmlns:resources="clr-namespace:x2136443.Resources"
                         x:Class="x2136443.Pages.VideoPlayerPage"
                         x:TypeArguments="vms:VideoPlayerViewModel">
     <pages:BasePage.BindingContext>
@@ -18,8 +19,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <o:VideoPlayer Grid.Row="1" x:Name="MyVideoPlayer" Source="{Binding Url}" TimeElapsedInterval="1"  />
-            <Button Grid.Row="1" x:Name="MuteButton" HeightRequest="100" HorizontalOptions="Start" VerticalOptions="Start">
+            <o:VideoPlayer Grid.Row="1" x:Name="MyVideoPlayer" Source="{Binding Url}" TimeElapsedInterval="1" Volume="{Binding Volume}" />
+            <Button Grid.Row="1" x:Name="MuteButton" HeightRequest="100" HorizontalOptions="Start" VerticalOptions="Start" Text="{x:Static resources:AppStrings.Mute}" Command="{Binding MuteButtonClickedCommand}">
                 <Button.IsVisible>
                     <OnPlatform x:TypeArguments="x:Boolean" iOS="false" Android="true"/>
                 </Button.IsVisible>
