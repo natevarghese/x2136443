@@ -25,7 +25,6 @@
     <Folder Include="Pages\" />
     <Folder Include="ViewModels\" />
     <Folder Include="DataTemplateSelectors\" />
-    <Folder Include="Converters\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
