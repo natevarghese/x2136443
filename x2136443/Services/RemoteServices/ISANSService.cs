@@ -9,6 +9,7 @@ namespace x2136443.Services.RemoveServices
     public interface ISANSService
     {
         Task<IList<Section>> GetOutline();
+        Task<byte[]> DownloadVideoAtUrl(string url);
     }
 
 
@@ -18,12 +19,6 @@ namespace x2136443.Services.RemoveServices
 
         public SANSService()
         {
-            SetupAuthTokenHeader();
-        }
-
-
-        void SetupAuthTokenHeader()
-        {
             AuthHeaders?.Clear();
             AuthHeaders = AuthHeaders ?? new Dictionary<string, string>();
 
@@ -31,14 +26,30 @@ namespace x2136443.Services.RemoveServices
             DefaultHeaders = DefaultHeaders ?? new Dictionary<string, string>();
         }
 
+        async protected override Task<Tuple<bool, T>> GetFromCache<T>(string key)
+        {
+            var obj = await App.PersistantStorageService.Get<T>(key);
+            return new Tuple<bool, T>(obj != null, obj);
+        }
+        async protected override Task SetToCache<T>(string key, T obj)
+        {
+            await App.PersistantStorageService.Set(key, obj);
+        }
+
 
         async public Task<IList<Section>> GetOutline()
         {
-            var url = new Uri(BaseURI, $"{ApiRoutes.Outline.Root}.json");
-            var response = await SendRequestAsync<OutlineResult>(url, HttpMethod.Get, null, 30);
+            var uri = new Uri(BaseURI, $"{ApiRoutes.Outline.Root}.json");
+            var response = await SendRequestAsync<OutlineResult>(uri, HttpMethod.Get, null, 30, true);
             return response?.Sections;
         }
 
+        async public Task<byte[]> DownloadVideoAtUrl(string url)
+        {
+            var uri = new Uri(url);
+            var response = await DownloadBytesAsync(uri);
+            return response;
+        }
 
         class ApiRoutes
         {

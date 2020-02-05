@@ -12,6 +12,8 @@ namespace x2136443
     {
         public static ISANSService SANSService => ServiceLocator.Instance.Resolve<ISANSService>();
         public static IDialogService DialogService => ServiceLocator.Instance.Resolve<IDialogService>();
+        public static IPersistantStorageService PersistantStorageService => ServiceLocator.Instance.Resolve<IPersistantStorageService>();
+        public static IPlaybackManager PlaybackManager => ServiceLocator.Instance.Resolve<IPlaybackManager>();
 
         public App()
         {
@@ -19,20 +21,38 @@ namespace x2136443
 
             ServiceLocator.Instance.Add<ISANSService, SANSService>();
             ServiceLocator.Instance.Add<IDialogService, DialogService>();
+            ServiceLocator.Instance.Add<IPersistantStorageService, PersistantStorageService>();
+            ServiceLocator.Instance.Add<IFileManager, FileManager>();
+            ServiceLocator.Instance.Add<IPlaybackManager, PlaybackManager>();
+
+            Akavache.Registrations.Start("x2136443");
 
             MainPage = new VideoListPage();
         }
 
         protected override void OnStart()
         {
+            Subscribe();
         }
-
-        protected override void OnSleep()
-        {
-        }
-
         protected override void OnResume()
         {
+            Subscribe();
+        }
+        protected override void OnSleep()
+        {
+            Unsubscribe();
+        }
+
+
+
+        async void Subscribe()
+        {
+            await App.PlaybackManager.Start();
+        }
+
+        async void Unsubscribe()
+        {
+            await App.PlaybackManager.Save();
         }
     }
 }

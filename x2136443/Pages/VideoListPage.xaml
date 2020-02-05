@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:BaseListViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:pages="clr-namespace:x2136443.Pages;assembly=x2136443"
+                        xmlns:converters="clr-namespace:x2136443.Converters;assembly=x2136443"
+                        xmlns:dataTemplateSelectors="clr-namespace:x2136443.DataTemplateSelectors;assembly=x2136443"
+                        xmlns:vms="clr-namespace:x2136443.ViewModels;assembly=x2136443"
+                        x:Class="x2136443.Pages.VideoListPage"
+                        x:TypeArguments="vms:VideoListViewModel">
+    <pages:BasePage.BindingContext>
+        <vms:VideoListViewModel />
+    </pages:BasePage.BindingContext>
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+            <converters:InvertedBooleanConverter x:Key="invertedBooleanConverter" />
+            <DataTemplate x:Key="sectionTemplate">
+                <ViewCell>
+                    <Grid BackgroundColor="White" VerticalOptions="Fill" Padding="10,10,20,10" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding Name}" LineBreakMode="WordWrap"  FontAttributes="Bold" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="videoTemplate">
+                <ViewCell>
+                    <Grid BackgroundColor="White" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Padding="30,10,20,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Text="{Binding Name}" LineBreakMode="WordWrap" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Text="{Binding Url}" FontAttributes="Italic" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <dataTemplateSelectors:VideoListTemplateSelector x:Key="videoListDataTemplateSelector"
+                SectionTemplate="{StaticResource sectionTemplate}"
+                VideoTemplate="{StaticResource videoTemplate}" />
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+    <ContentPage.Content>
+        <Grid x:Name="ParentGrid"
+              RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1"
+                   x:Name="EmptyLabel"
+                   Margin="0,0,0,0"
+                   IsVisible="{Binding ListViewEmpty}"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   Text="Nothing to see here" />
+            <ListView x:Name="MyListView"
+                IsPullToRefreshEnabled="true"
+                ItemsSource="{Binding TableItems}"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsBusy}"
+                HasUnevenRows="True"
+                BackgroundColor="Transparent"
+                ItemTemplate="{StaticResource videoListDataTemplateSelector}"
+                Grid.Row="1">
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</pages:BaseListViewPage>

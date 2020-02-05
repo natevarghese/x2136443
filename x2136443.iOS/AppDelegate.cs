@@ -4,6 +4,8 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using x2136443.iOS.Services;
+using x2136443.Services;
 
 namespace x2136443.iOS
 {
@@ -25,6 +27,8 @@ namespace x2136443.iOS
             Xamarin.Calabash.Start();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+
+            ServiceLocator.Instance.Add<IVideoPlayer, VideoPlayer>();
 
             return base.FinishedLaunching(app, options);
         }

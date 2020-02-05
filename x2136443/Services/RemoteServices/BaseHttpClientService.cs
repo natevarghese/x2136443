@@ -15,46 +15,50 @@ namespace x2136443.Services.RemoveServices
         public IDictionary<string, string> AuthHeaders { get; set; }
         public Func<object, string> RequestDataSerializingDelegate { get; set; }
 
-        protected async Task<T> SendRequestAsync<T>(Uri url, HttpMethod httpMethod, object requestData, int timeoutSeconds) where T : new()
+        static HttpClient Client = new HttpClient(new HttpClientHandler());
+
+        protected async Task<T> SendRequestAsync<T>(Uri url, HttpMethod httpMethod, object requestData, int timeoutSeconds, bool isCacheEnabled) where T : new()
         {
+            //update timeout
+            Client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+
             // Default to GET
             var method = httpMethod ?? HttpMethod.Get;
+
+            //deal with cache
+            var cacheKey = url?.OriginalString;
+            if (isCacheEnabled)
+            {
+                var cachedResult = await GetFromCache<T>(cacheKey);
+                if (cachedResult.Item1)
+                    return cachedResult.Item2;
+            }
 
             // Serialize request data (if any)
             string data = null;
             if (RequestDataSerializingDelegate != null && requestData != null)
-            {
                 data = RequestDataSerializingDelegate?.Invoke(requestData);
-            }
             else
-            {
                 data = requestData == null ? null : JsonConvert.SerializeObject(requestData);
-            }
 
             using (var request = new HttpRequestMessage(method, url))
             {
                 if (data != null)
-                {
                     request.Content = new StringContent(data, Encoding.UTF8, "application/json");
-                }
 
                 ApplyHeadersToRequst(request.Headers);
 
-
                 try
                 {
-                    using (var handler = new HttpClientHandler())
-                    using (var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(timeoutSeconds) })
-                    using (var responseMsg = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead))
-                        return await DeseralizeResponse<T>(responseMsg);
-                }
-                catch (HttpRequestException e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e.Message);
-                }
-                catch (System.Net.WebException e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    using (var responseMsg = await Client.SendAsync(request, HttpCompletionOption.ResponseContentRead))
+                    {
+                        var responseObj = await DeseralizeResponse<T>(responseMsg);
+
+                        if (isCacheEnabled)
+                            await SetToCache(cacheKey, responseObj);
+
+                        return responseObj;
+                    }
                 }
                 catch (TaskCanceledException) { }
                 catch (NullReferenceException) { }
@@ -65,6 +69,26 @@ namespace x2136443.Services.RemoveServices
             }
 
             return default(T);
+        }
+        protected virtual Task<Tuple<bool, T>> GetFromCache<T>(string key) where T : new()
+        {
+            return Task.FromResult(new Tuple<bool, T>(false, default(T)));
+        }
+        protected virtual Task SetToCache<T>(string key, T obj) where T : new()
+        {
+            return Task.FromResult(default(T));
+        }
+        protected async Task<byte[]> DownloadBytesAsync(Uri uri)
+        {
+            try
+            {
+                using (var httpResponse = await Client.GetAsync(uri))
+                    if (httpResponse.StatusCode == HttpStatusCode.OK)
+                        return await httpResponse.Content.ReadAsByteArrayAsync();
+            }
+            catch { }
+
+            return null;
         }
 
         protected virtual void ApplyHeadersToRequst(HttpRequestHeaders headers) { }
