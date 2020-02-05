@@ -20,7 +20,6 @@ namespace x2136443.Services.RemoveServices
         protected async Task<T> SendRequestAsync<T>(Uri url, HttpMethod httpMethod, object requestData, bool isCacheEnabled) where T : new()
         {
 
-
             // Default to GET
             var method = httpMethod ?? HttpMethod.Get;
 
