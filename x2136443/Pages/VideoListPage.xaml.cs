@@ -18,14 +18,14 @@ namespace x2136443.Pages
 
             EmptyLabel.Text = x2136443.Resources.AppStrings.NoData;
 
-            MyListView.ItemSelected += ViewModel.ListView_ItemSelected;
+            MyListView.ItemTapped += ViewModel.ListView_ItemTapped;
 
         }
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
 
-            MyListView.ItemSelected -= ViewModel.ListView_ItemSelected;
+            MyListView.ItemTapped -= ViewModel.ListView_ItemTapped;
 
         }
     }

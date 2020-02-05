@@ -31,25 +31,27 @@ namespace x2136443.ViewModels
             {
                 items.Add(section);
 
-                //if (section.IsExpanded)
-                //{
-                if (section.Videos?.Any() ?? false)
-                    items.AddRange(section.Videos);
-                //}
+                if (section.IsExpanded)
+                {
+                    if (section.Videos?.Any() ?? false)
+                        items.AddRange(section.Videos);
+                }
             }
             return items;
         }
 
-        async public override void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async public override void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var item = e.SelectedItem;
+            var item = e.Item;
+
             if (item is Section section)
             {
-
+                section.IsExpanded = !section.IsExpanded;
+                TableItems = ProcessItems();
                 return;
             }
 
-            else if (item is Video video)
+            if (item is Video video)
             {
                 var fileManagerService = ServiceLocator.Instance.Resolve<IFileManager>();
 

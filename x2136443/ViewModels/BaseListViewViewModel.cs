@@ -16,7 +16,11 @@ namespace x2136443.ViewModels
         public IEnumerable<T> TableItems
         {
             get => _TableItems;
-            set => SetProperty(ref _TableItems, value);
+            set
+            {
+                SetProperty(ref _TableItems, value);
+                ListViewEmpty = !value?.Any() ?? true;
+            }
         }
 
         bool _ListViewEmpty;
@@ -39,14 +43,13 @@ namespace x2136443.ViewModels
         async Task GetTableItems()
         {
             IsBusy = true;
-            var items = await Fetch();
-            IsBusy = false;
 
-            TableItems = items;
-            ListViewEmpty = !TableItems?.Any() ?? true;
+            TableItems = await Fetch();
+
+            IsBusy = false;
         }
 
         public abstract Task<IEnumerable<T>> Fetch();
-        public abstract void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e);
+        public abstract void ListView_ItemTapped(object sender, ItemTappedEventArgs e);
     }
 }

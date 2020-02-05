@@ -18,5 +18,6 @@ namespace x2136443.DataModels
     {
         public string Name { get; set; }
         public IList<Video> Videos { get; set; }
+        public bool IsExpanded { get; set; }
     }
 }
