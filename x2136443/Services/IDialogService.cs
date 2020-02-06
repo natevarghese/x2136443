@@ -15,7 +15,7 @@ namespace x2136443.Services
     {
         public IProgressDialog Loading()
         {
-            return UserDialogs.Instance.Loading("Loading", null, null, true, MaskType.Gradient);
+            return UserDialogs.Instance.Loading(x2136443.Resources.AppStrings.Loading, null, null, true, MaskType.Gradient);
         }
         async public Task<string> ActionSheetAsync(string title, string cancel, string destructive, CancellationToken cancelToken, string[] buttons)
         {

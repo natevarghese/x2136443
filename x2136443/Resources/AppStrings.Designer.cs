@@ -58,5 +58,11 @@ namespace x2136443.Resources {
                 return ResourceManager.GetString("Mute", resourceCulture);
             }
         }
+        
+        internal static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
     }
 }
