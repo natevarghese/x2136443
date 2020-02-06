@@ -26,6 +26,8 @@
     <Folder Include="ViewModels\" />
     <Folder Include="DataTemplateSelectors\" />
     <Folder Include="Resources\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\AppStrings.resx">

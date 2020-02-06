@@ -15,15 +15,6 @@ namespace x2136443.Pages
             base.OnAppearing();
 
             ApplySafeAreaGridConstraints(ParentGrid);
-
-            MyListView.ItemTapped += ViewModel.ListView_ItemTapped;
-
-        }
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            MyListView.ItemTapped -= ViewModel.ListView_ItemTapped;
         }
     }
 }

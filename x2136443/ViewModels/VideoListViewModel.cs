@@ -16,7 +16,7 @@ namespace x2136443.ViewModels
 
         async public override Task<IEnumerable<object>> Fetch()
         {
-            //HACK delay required for some reason on android. Need more time
+            //HACK delay required when directly from cache on android. Need more time to investigate
             if (Xamarin.Essentials.DeviceInfo.Platform == Xamarin.Essentials.DevicePlatform.Android)
                 await Task.Delay(TimeSpan.FromMilliseconds(100));
 
@@ -40,9 +40,8 @@ namespace x2136443.ViewModels
             return items;
         }
 
-        async public override void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        async public override void ListView_ItemTapped(object item)
         {
-            var item = e.Item;
 
             if (item is Section section)
             {

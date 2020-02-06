@@ -3,6 +3,8 @@
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:pages="clr-namespace:x2136443.Pages;assembly=x2136443"
                         xmlns:dataTemplateSelectors="clr-namespace:x2136443.DataTemplateSelectors;assembly=x2136443"
+                        xmlns:bahaviors="clr-namespace:x2136443.Behaviors;assembly=x2136443"
+                        xmlns:converters="clr-namespace:x2136443.Converters;assembly=x2136443"
                         xmlns:resources="clr-namespace:x2136443.Resources"
                         xmlns:vms="clr-namespace:x2136443.ViewModels;assembly=x2136443"
                         x:Class="x2136443.Pages.VideoListPage"
@@ -12,6 +14,7 @@
     </pages:BasePage.BindingContext>
     <pages:BasePage.Resources>
         <ResourceDictionary>
+            <converters:ItemTappedEventArgsToItemTappedConverter x:Key="ItemTappedConverter" />
             <DataTemplate x:Key="sectionTemplate">
                 <ViewCell>
                     <Grid BackgroundColor="White" VerticalOptions="Fill" Padding="10,10,20,10" HorizontalOptions="FillAndExpand">
@@ -53,7 +56,7 @@
                    HorizontalOptions="FillAndExpand"
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center" />
-            <ListView x:Name="MyListView"
+            <ListView
                 IsPullToRefreshEnabled="true"
                 ItemsSource="{Binding TableItems}"
                 RefreshCommand="{Binding RefreshCommand}"
@@ -62,6 +65,9 @@
                 BackgroundColor="Transparent"
                 ItemTemplate="{StaticResource videoListDataTemplateSelector}"
                 Grid.Row="1">
+                <ListView.Behaviors>
+                    <bahaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding ItemTappedCommand}" Converter="{StaticResource ItemTappedConverter}" />
+                </ListView.Behaviors>
             </ListView>
         </Grid>
     </ContentPage.Content>

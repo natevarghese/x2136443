@@ -12,6 +12,10 @@ namespace x2136443.ViewModels
         ICommand _RefreshCommand;
         public ICommand RefreshCommand => _RefreshCommand ?? (_RefreshCommand = new Command(async () => await GetTableItems()));
 
+        ICommand _ItemTappedCommand;
+        public ICommand ItemTappedCommand => _ItemTappedCommand ?? (_ItemTappedCommand = new Command(ListView_ItemTapped));
+
+
         IEnumerable<T> _TableItems;
         public IEnumerable<T> TableItems
         {
@@ -37,7 +41,9 @@ namespace x2136443.ViewModels
         {
             base.ViewModelAppearing();
 
-            await GetTableItems();
+            var anyData = TableItems?.Any() ?? false;
+            if (!anyData)
+                await GetTableItems();
         }
 
         async Task GetTableItems()
@@ -50,6 +56,6 @@ namespace x2136443.ViewModels
         }
 
         public abstract Task<IEnumerable<T>> Fetch();
-        public abstract void ListView_ItemTapped(object sender, ItemTappedEventArgs e);
+        public abstract void ListView_ItemTapped(object sender);
     }
 }

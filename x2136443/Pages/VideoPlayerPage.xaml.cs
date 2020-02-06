@@ -30,7 +30,6 @@ namespace x2136443.Pages
             ApplySafeAreaGridConstraints(ParentGrid);
 
             MyVideoPlayer.PlayerStateChanged += MyVideoPlayer_PlayerStateChanged;
-            MyVideoPlayer.TimeElapsed += MyVideoPlayer_TimeElapsed;
         }
 
 
@@ -40,7 +39,6 @@ namespace x2136443.Pages
             base.OnDisappearing();
 
             MyVideoPlayer.PlayerStateChanged -= MyVideoPlayer_PlayerStateChanged;
-            MyVideoPlayer.TimeElapsed -= MyVideoPlayer_TimeElapsed;
         }
 
 
@@ -58,10 +56,6 @@ namespace x2136443.Pages
 
                 MyVideoPlayer.Seek(StartTime);
             }
-        }
-        void MyVideoPlayer_TimeElapsed(object sender, Octane.Xamarin.Forms.VideoPlayer.Events.VideoPlayerEventArgs e)
-        {
-            ViewModel.PlaybackTicked((int)e.CurrentTime.TotalSeconds);
         }
     }
 }
